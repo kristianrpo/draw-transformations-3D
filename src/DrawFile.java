@@ -31,7 +31,7 @@ public class DrawFile extends JPanel implements KeyListener {
         this.requestFocus();
         this.translationMatrix = Matrix4x4.identity();
         this.rotationMatrix = Matrix4x4.identity();
-        this.d= 500;
+        this.d= -500;
         this.numberOfRotations = 0;
     }
     @Override
@@ -114,10 +114,10 @@ public class DrawFile extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                Transforms.translate(vertexes, edges, translationMatrix, 0, 0, 10,numberOfRotations);
+                Transforms.translate(vertexes, edges, translationMatrix, 0, 0, 10,numberOfRotations,10);
                 break;
             case KeyEvent.VK_DOWN:
-                Transforms.translate(vertexes, edges, translationMatrix, 0, 0, -10, numberOfRotations);
+                Transforms.translate(vertexes, edges, translationMatrix, 0, 0, -10, numberOfRotations,10);
                 break;
             case KeyEvent.VK_LEFT:
                 numberOfRotations--;

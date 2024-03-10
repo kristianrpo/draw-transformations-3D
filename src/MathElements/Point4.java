@@ -18,7 +18,7 @@ public class Point4 {
     public double getY() {
         return y;
     }
-    public double getZ() { return z*-1; }
+    public double getZ() { return z; }
     public double getW() { return w; }
 
     public String toString(){

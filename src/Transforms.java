@@ -47,10 +47,10 @@ public class Transforms {
         }
     }
 
-    public static void translate(Point4[] vertexes, Edge[] edges, Matrix4x4 translationMatrix, int x, int y, int z, int numberOfRotations) {
+    public static void translate(Point4[] vertexes, Edge[] edges, Matrix4x4 translationMatrix, int x, int y, int z, int numberOfRotations, int degree) {
         Point4 pointToMove = new Point4(x,y,z,1);
         if (numberOfRotations!=0){
-            Point4 newPoint = times(Matrix4x4.rotation(10*numberOfRotations,'y'),pointToMove);
+            Point4 newPoint = times(Matrix4x4.rotation(degree*numberOfRotations,'y'),pointToMove);
             translationMatrix = Matrix4x4.translation(newPoint.getX(), newPoint.getY(), newPoint.getZ());
             applyTransformation(vertexes, edges, translationMatrix, null, null, 1);
         }
