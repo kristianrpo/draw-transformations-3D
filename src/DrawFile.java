@@ -18,6 +18,7 @@ public class DrawFile extends JPanel implements KeyListener {
     private Edge[] edges;
 
     private int d;
+    private int numberOfRotations;
     private Matrix4x4 translationMatrix;
     private Matrix4x4 rotationMatrix;
     private boolean fileRead;
@@ -31,6 +32,7 @@ public class DrawFile extends JPanel implements KeyListener {
         this.translationMatrix = Matrix4x4.identity();
         this.rotationMatrix = Matrix4x4.identity();
         this.d= 500;
+        this.numberOfRotations = 0;
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -112,18 +114,18 @@ public class DrawFile extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                Transforms.translate(vertexes, edges, translationMatrix, 0, 0, 10);
+                Transforms.translate(vertexes, edges, translationMatrix, 0, 0, 10,numberOfRotations);
                 break;
             case KeyEvent.VK_DOWN:
-                Transforms.translate(vertexes, edges, translationMatrix, 0, 0, -10);
+                Transforms.translate(vertexes, edges, translationMatrix, 0, 0, -10, numberOfRotations);
                 break;
             case KeyEvent.VK_LEFT:
+                numberOfRotations--;
                 Transforms.rotate(vertexes, edges, translationMatrix, rotationMatrix, -10, 'y');
-                Transforms.rotateTranslationMatrix(translationMatrix,rotationMatrix, 10, 'y');
                 break;
             case KeyEvent.VK_RIGHT:
+                numberOfRotations++;
                 Transforms.rotate(vertexes, edges, translationMatrix, rotationMatrix, 10, 'y');
-                Transforms.rotateTranslationMatrix(translationMatrix,rotationMatrix, 10, 'y');
                 break;
             default:
                 break;

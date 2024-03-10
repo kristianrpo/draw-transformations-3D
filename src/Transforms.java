@@ -47,9 +47,17 @@ public class Transforms {
         }
     }
 
-    public static void translate(Point4[] vertexes, Edge[] edges, Matrix4x4 translationMatrix, int x, int y, int z) {
-        translationMatrix = Matrix4x4.translation(x, y, z);
-        applyTransformation(vertexes, edges, translationMatrix, null, null, 1);
+    public static void translate(Point4[] vertexes, Edge[] edges, Matrix4x4 translationMatrix, int x, int y, int z, int numberOfRotations) {
+        Point4 pointToMove = new Point4(x,y,z,1);
+        if (numberOfRotations!=0){
+            Point4 newPoint = times(Matrix4x4.rotation(10*numberOfRotations,'y'),pointToMove);
+            translationMatrix = Matrix4x4.translation(newPoint.getX(), newPoint.getY(), newPoint.getZ());
+            applyTransformation(vertexes, edges, translationMatrix, null, null, 1);
+        }
+        else{
+            translationMatrix = Matrix4x4.translation(pointToMove.getX(), pointToMove.getY(), pointToMove.getZ());
+            applyTransformation(vertexes, edges, translationMatrix, null, null, 1);
+        }
     }
 
     public static void rotate(Point4[] vertexes, Edge[] edges, Matrix4x4 translationMatrix, Matrix4x4 rotationMatrix,
@@ -63,19 +71,4 @@ public class Transforms {
         applyTransformation(vertexes, edges, translationMatrix, null, null, 1);
     }
 
-    public static void scale(Point4[] vertexes, Edge[] edges, Matrix4x4 translationMatrix, Matrix4x4 scalingMatrix,
-                             double factor) {
-        Point4 center = calculateCenter(vertexes);
-        translationMatrix = Matrix4x4.translation(-center.getX(), -center.getY(),-center.getZ());
-        applyTransformation(vertexes, edges, translationMatrix, null, null, 1);
-        scalingMatrix = Matrix4x4.scaling(factor, factor, factor);
-        applyTransformation(vertexes, edges, null, null, scalingMatrix, 3);
-        translationMatrix = Matrix4x4.translation(center.getX(), center.getY(),center.getZ());
-        applyTransformation(vertexes, edges, translationMatrix, null, null, 1);
-    }
-
-    public static void rotateTranslationMatrix(Matrix4x4 translationMatrix, Matrix4x4 rotationMatrix,int degrees, char axis){
-        rotationMatrix = Matrix4x4.rotation(degrees,axis);
-        translationMatrix = times(rotationMatrix, translationMatrix);
-    }
 }
